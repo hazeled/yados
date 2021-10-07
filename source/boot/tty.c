@@ -1,5 +1,6 @@
 #include <boot/tty/tty.h>
 #include <boot/util.h>
+#include <boot/mem.h>
 #include <stdarg.h>
 
 int cursor_x = 0;
@@ -39,8 +40,19 @@ void tty_print_char_pos ( char c, uint8_t x, uint8_t y )
 
 void tty_new_line ( void ) 
 {
+    if (cursor_y == TTY_HEIGHT - 1)
+    {
+        // Scroll TTY
+        volatile unsigned char* vidmem = (volatile unsigned char*)0xb8000;
+        // 160 is the size of a single line
+        memcpy(vidmem, &vidmem[160], 160 * TTY_HEIGHT - 1);
+    }
+    else
+    {
+        // Move cursor normally
+        cursor_y++;
+    }
     cursor_x = 0;
-    cursor_y++;
 }
 
 void tty_print ( char* str, ... )
