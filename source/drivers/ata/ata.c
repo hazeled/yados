@@ -16,5 +16,5 @@ void driver_ata_lba_to_chs ( int lba, int *head, int *track, int *sector )
 {
     (*head)   = (lba % (BOOT_DRIVEINFO[1] * 2)) / BOOT_DRIVEINFO[1];
     (*track)  = (lba / (BOOT_DRIVEINFO[1] * 2));
-    (*sector) = (lba % BOOT_DRIVEINFO[1] + 1); 
+    (*sector) = (lba %  BOOT_DRIVEINFO[1] + 1); 
 }
