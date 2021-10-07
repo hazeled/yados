@@ -1,14 +1,15 @@
 #include <boot/mem.h>
 
-void memcpy ( void* dst, void* src, unsigned int bytes )
+void* memcpy ( void* dst, const void* src, unsigned int size )
 {
-    unsigned int i;
-    for (i = 0; i < bytes; i++)
-    {
-        *(char*)dst = *(char*)src;
-        dst++;
-        src++;
-    }
+    void* temp = dst;
+    __asm__ volatile (
+        "rep movsb"
+        :"=D"(dst),"=S"(src),"=c"(size)
+        :"0"(dst),"1"(src),"2"(size)
+        :"memory"
+    );
+    return temp;
 }
 
 void strcpy ( char* dst, char* src ) 
