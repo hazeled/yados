@@ -43,7 +43,6 @@ void tty_new_line ( void )
     cursor_y++;
 }
 
-void do_nothing () { return; }
 void tty_print ( char* str, ... )
 {
     va_list args;
@@ -67,14 +66,15 @@ void tty_print ( char* str, ... )
                 switch(*strptr)
                 {
                     case 'd':
-                        itoa(num, &strbuf[0], 10);
+                        itoa(num, strbuf, 10);
                         tty_print(strbuf);
                         strptr++;
                         break;
                     case 'x':
-                        itoa(num, &strbuf[0], 16);
+                        itoa(num, strbuf, 16);
                         tty_print("0x");
                         tty_print(strbuf);
+                        strptr++;
                         break;
                     default:
                         tty_print("%");
