@@ -54,6 +54,10 @@ void tty_print ( char* str, ... )
     {
         switch(*strptr)
         {
+            case '\\':
+                strptr++;
+                tty_print(strptr++);
+                break;
             case '\n':
                 tty_new_line();
                 strptr++;
