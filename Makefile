@@ -16,11 +16,11 @@ include config/crosscomp/make.config
 #	@echo .
 #	@echo . The full list of options are: i386 x86_64
 
+i386 : Pre Pre_i386 Bootloader Kernel_i386
+	@#$(MAKE) -C config/i386/
+
 clean:
 	rm -rf $(BUILDDIR)/*
-
-#i386 : Pre Pre_i386 Bootloader Kernel_i386
-#	@#$(MAKE) -C config/i386/
 
 Pre_i386 : 
 
