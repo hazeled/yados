@@ -4,6 +4,7 @@
 #include <drivers/serial/serial.h>
 
 extern char KERNEL_END;
+extern char BOOT_TWO_START;
 
 void c_bmain ( void )
 {
@@ -26,5 +27,6 @@ void c_bmain ( void )
     tty_print("Initializing ATA PIO driver\n");
     driver_ata_init();
     
-    tty_print("KERNEL_END located at %x", (int)&KERNEL_END);
+    tty_print("BOOT_TWO_START located at %x\n", (int)&BOOT_TWO_START);
+    tty_print("KERNEL_END located at %x\n", (int)&KERNEL_END);
 }
