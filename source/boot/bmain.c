@@ -3,6 +3,8 @@
 #include <drivers/ata/ata.h>
 #include <drivers/serial/serial.h>
 
+extern char KERNEL_END;
+
 void c_bmain ( void )
 {
     tty_initialize();
@@ -21,7 +23,8 @@ void c_bmain ( void )
     }
     serial_write("Serial initialized...\n");
 
-
     tty_print("Initializing ATA PIO driver\n");
     driver_ata_init();
+    
+    tty_print("KERNEL_END located at %x", (int)&KERNEL_END);
 }

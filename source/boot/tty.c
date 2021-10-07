@@ -61,18 +61,23 @@ void tty_print ( char* str, ... )
                 break;
             case '%':
                 strptr++;
+                int num;
+                char strbuf[20];
+                num = va_arg(args, int);
                 switch(*strptr)
                 {
                     case 'd':
-                        // For some reason, the char can only be declared
-                        // AFTER doing something. Really weird
-                        // TODO: Fix this
-                        do_nothing();
-                        int num = va_arg(args, int);
-                        char strbuf[20];
                         itoa(num, &strbuf[0], 10);
                         tty_print(strbuf);
                         strptr++;
+                        break;
+                    case 'x':
+                        itoa(num, &strbuf[0], 16);
+                        tty_print("0x");
+                        tty_print(strbuf);
+                        break;
+                    default:
+                        tty_print("%");
                         break;
                 }
                 break;

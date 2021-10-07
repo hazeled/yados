@@ -7,10 +7,13 @@ SECTIONS
     .text . :
     {
         *(.text)
+        *(.k_start)
+        *(.k_end)
     }
 
     .data . : 
     {
         *(.data)
+        *(.rodata)
     }
 }
