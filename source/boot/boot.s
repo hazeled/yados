@@ -68,6 +68,10 @@ _bmain:
 	jmp $
 .readsuccess:
 
+    ; These values are typically more accurate than the "default" values on 
+    ; hard drives. However, it's typically the other way around on USB sticks.
+    ; It might be a good idea to check to see if the boot is occuring on a hard
+    ; drive or other device, and use the needed values accordingly.
 .readdrivegeom:
     ; Get drive geometry
     mov     si, MSG_DRIVEGEOM
