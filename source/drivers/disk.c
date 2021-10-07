@@ -1,5 +1,5 @@
 #include "boot/util.h"
-#include <drivers/disk/ata.h>
+#include <drivers/disk/disk.h>
 #include <drivers/serial/serial.h>
 #include <boot/tty/tty.h>
 

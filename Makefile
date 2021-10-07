@@ -1,38 +1,36 @@
-TOP=$(shell pwd)
-
-export CFLAGS=-ffreestanding -fno-builtin -Wall -nostdlib
-
-export BUILDDIR=$(TOP)/build
-
-export BOOTBUILDDIR=$(BUILDDIR)/boot/
-export KERNELBUILDDIR=$(BUILDDIR)/kernel/
-
+ASM=nasm
+OBJCOPY=objcopy
 include config/crosscomp/make.config
 
-#all : 
-#	@echo . To build YADOS, please use:
-#	@echo .	make \<architecture\>, e.g:
-#	@echo .	make i386
-#	@echo .
-#	@echo . The full list of options are: i386 x86_64
+CCINCLUDEDIR=-Iinclude
+CFLAGS := $(CFLAGS) $(CCINCLUDEDIR) 
+ASMFLAGS=
+COPYFLAGS=status=noxfer conv=notrunc
+LDFLAGS=
 
-i386 : Pre Pre_i386 Bootloader Kernel_i386
-	@#$(MAKE) -C config/i386/
+SRCDIR=source/
+BUILDDIR=build/
 
-clean:
-	rm -rf $(BUILDDIR)/*
+CSRCS  := $(wildcard $(SRCDIR)/*/*.c)
+CSRCS  += $(wildcard $(SRCDIR)/*/*/*.c) 
+COBJS  := $(patsubst $(SRCDIR)/%.c,$(BOOTBUILDDIR)%.o,$(CSRCS))
+#-include $(COBJS:.c=.d)
+#COBJS  := $(patsubst $(SRCDIR)/%,$(BOOTBUILDDIR)%,$(COBJS))
 
-Pre_i386 : 
+.PHONY : all
 
-Kernel_i386 :
-	@mkdir -p $(KERNELBUILDDIR)
-	$(MAKE) -C kernel/ ARCH=i386
+all : $(BUILDDIR)yados.bin
 
-Pre:
-	@mkdir -p $(BUILDDIR)
+$(BUILDDIR)yados.bin : $(BUILDDIR)boot1.elf32 $(BUILDDIR)boot/boot_two.b $(COBJS) 
+	$(CROSS_LD) $(LDFLAGS) $^ -Tlinker/linker.ld -o $@ 	
 
-Bootloader : 
-	@mkdir -p $(BOOTBUILDDIR)
-	$(MAKE) -C bootloader
+$(BOOTBUILDDIR)boot1.elf32 : source/boot/boot.s
+	$(ASM) -f elf32 $^ -o $@
 
+$(BUILDDIR)%.o : $(SRCDIR)/%.c
+	mkdir -p $(patsubst %$(notdir $@),%,$@)
+	$(CROSS_CC) $(CFLAGS) -c $< -o $@
 
+$(BUILDDIR)%.asmo : $(SRCDIR)%.s
+	mkdir -p $(patsubst %$(notdir $@),%,$@)
+	$(ASM) -f elf32 $(ASMFLAGS) $< -o $@
