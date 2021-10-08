@@ -1,4 +1,4 @@
-GLOBAL irq_initialize
+GLOBAL idt_initialize
 
-irq_initialize:
+idt_initialize:
     ret

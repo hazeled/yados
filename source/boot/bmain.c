@@ -2,7 +2,7 @@
 #include <boot/tty/tty.h>
 #include <drivers/ata/ata.h>
 #include <drivers/serial/serial.h>
-#include <irq/irq.h>
+#include <idt/idt.h>
 
 extern char KERNEL_END;
 extern char BOOT_TWO_START;
@@ -13,8 +13,8 @@ void c_bmain ( void )
     tty_clear();
     tty_print("Entered boot stage 2.5\n");
 
-    tty_print("Initializing IRQ");
-    irq_initialize();
+    tty_print("Initializing IDT");
+    idt_initialize();
 
     tty_print("Starting serial driver...\n");
     driver_serial_init(DRIVER_SERIAL_PORT_COM1);

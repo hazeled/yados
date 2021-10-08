@@ -1,3 +1,3 @@
 #pragma once
 
-void irq_initialize();
+void idt_initialize();
