@@ -16,13 +16,14 @@
 enum driver_ata_port
 {
     DATA = 0,
-    ERR,
+    FEATURES,
     SECTOR_COUNT,
     LBA_LO,
     LBA_MID,
     LBA_HI,
     DRIVE,
-    COMMAND
+    COMMAND = 7,
+    STATUS  = 7,
 };
 
 #endif
