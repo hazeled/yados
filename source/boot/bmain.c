@@ -35,8 +35,8 @@ void BOOT c_bmain ( void )
     driver_ata_init();
     driver_ata_debug_print();
     
-    tty_print("GDT DATASEG located at    : %x\n", (int)&DATASEG);
-    tty_print("GDT CODESEG located at    : %x\n", (int)&CODESEG);
+    tty_print("GDT DATASEG located at : %x\n", (int)&DATASEG);
+    tty_print("GDT CODESEG located at : %x\n", (int)&CODESEG);
     tty_print("BOOT_TWO_START located at : %x\n", (int)&BOOT_TWO_START);
-    tty_print("KERNEL_END located at     : %x\n", (int)&KERNEL_END);
+    tty_print("KERNEL_END located at : %x\n", (int)&KERNEL_END);
 }
