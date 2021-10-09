@@ -3,6 +3,7 @@
 
 GLOBAL 		_bmain
 GLOBAL      BOOT_DRIVEINFO
+GLOBAL      CODESEG
 
 SECTION .boot1
 
