@@ -7,9 +7,10 @@ SECTIONS
     .text . :
     {
         *(.text)
-        *(.k_start)
-        *(.k_end)
     }
+    .k_start : { *(.k_start) }
+    .k_text : { *(.k_text) }
+    .k_end : { *(.k_end) }
 
     .data . : 
     {
