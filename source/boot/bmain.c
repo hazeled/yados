@@ -1,12 +1,13 @@
-#include "boot/util.h"
+#include <boot/boot.h>
+#include <boot/util.h>
 #include <boot/tty/tty.h>
 #include <drivers/ata/ata.h>
 #include <drivers/serial/serial.h>
 
-extern char KERNEL_END;
-extern char BOOT_TWO_START;
+extern char BOOT KERNEL_END;
+extern char BOOT BOOT_TWO_START;
 
-void c_bmain ( void )
+void BOOT c_bmain ( void )
 {
     tty_initialize();
     tty_clear();

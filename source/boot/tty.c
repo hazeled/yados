@@ -1,3 +1,4 @@
+#include <boot/boot.h>
 #include <boot/tty/tty.h>
 #include <boot/util.h>
 #include <boot/mem.h>
@@ -6,11 +7,11 @@
 int cursor_x = 0;
 int cursor_y = 0;
 
-void tty_initialize ( void )
+void BOOT tty_initialize ( void )
 {
 }
 
-void tty_clear ( void )
+void BOOT tty_clear ( void )
 {
     volatile unsigned char* vidmem = (unsigned char*)0xb8000;
     for (uint16_t i = 0; i < TTY_WIDTH * TTY_HEIGHT; i++)
@@ -20,7 +21,7 @@ void tty_clear ( void )
     }
 }
 
-void tty_print_char ( char c )
+void BOOT tty_print_char ( char c )
 {
     if (cursor_x == TTY_WIDTH - 1) 
     {
@@ -29,7 +30,7 @@ void tty_print_char ( char c )
     tty_print_char_pos(c, cursor_x++, cursor_y);
 }
 
-void tty_print_char_pos ( char c, uint8_t x, uint8_t y )
+void BOOT tty_print_char_pos ( char c, uint8_t x, uint8_t y )
 {
     volatile unsigned char* vidmem = (volatile unsigned char*)0xb8000;
     vidmem += y * TTY_WIDTH * 2;
@@ -38,7 +39,7 @@ void tty_print_char_pos ( char c, uint8_t x, uint8_t y )
     vidmem[1] = 15;
 }
 
-void tty_new_line ( void ) 
+void BOOT tty_new_line ( void ) 
 {
     if (cursor_y == TTY_HEIGHT - 1)
     {
@@ -55,7 +56,7 @@ void tty_new_line ( void )
     cursor_x = 0;
 }
 
-void tty_print ( char* str, ... )
+void BOOT tty_print ( char* str, ... )
 {
     va_list args;
     va_start (args, str);

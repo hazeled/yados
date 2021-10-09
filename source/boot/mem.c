@@ -1,6 +1,7 @@
+#include <boot/boot.h>
 #include <boot/mem.h>
 
-void* memcpy ( void* dst, const void* src, unsigned int size )
+void* BOOT memcpy ( void* dst, const void* src, unsigned int size )
 {
     void* temp = dst;
     __asm__ volatile (
@@ -12,7 +13,7 @@ void* memcpy ( void* dst, const void* src, unsigned int size )
     return temp;
 }
 
-void strcpy ( char* dst, char* src ) 
+void BOOT strcpy ( char* dst, char* src ) 
 {
     while (*src)
     {

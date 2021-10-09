@@ -4,7 +4,7 @@
 GLOBAL 		_bmain
 GLOBAL      BOOT_DRIVEINFO
 
-SECTION .text
+SECTION .boot1
 
 	jmp 	_bmain
 

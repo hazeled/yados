@@ -6,12 +6,11 @@ SECTIONS
     . = 0x7c00 ;
     .text . :
     {
+        *(.boot1)
+        *(.boot2)
+        *(.boot_text)
         *(.text)
     }
-    .k_start : { *(.k_start) }
-    .k_text : { *(.k_text) }
-    .k_end : { *(.k_end) }
-
     .data . : 
     {
         *(.data)
