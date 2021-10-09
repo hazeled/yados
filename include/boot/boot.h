@@ -1,3 +1,3 @@
 #pragma once
 
-#define BOOT __attribute__ ((section(".k_text")))
+#define BOOT __attribute__ ((section(".boot_text")))
