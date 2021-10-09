@@ -1,11 +1,11 @@
 [ BITS 32 ]
+SECTION .boot2
 
 BOOT_TWO_START:
 
 GLOBAL BOOT_TWO_START
 GLOBAL _start
 
-SECTION .boot2
 EXTERN tty_print
 EXTERN tty_clear
 EXTERN c_bmain
