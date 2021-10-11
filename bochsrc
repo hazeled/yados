@@ -1,0 +1,6 @@
+floppya: 1_44=build/yados.bin, status=inserted
+boot: floppy
+vga: extension=none
+floppy_bootsig_check: disabled=1
+megs: 32
+config_interface: textconfig
