@@ -1,14 +1,17 @@
 #include <boot/boot.h>
 #include <boot/util.h>
+#include <drivers/io/io.h>
 #include <boot/tty/tty.h>
 #include <drivers/ata/ata.h>
 #include <drivers/serial/serial.h>
 #include <idt/idt.h>
 
-extern char BOOT KERNEL_END;
-extern char BOOT BOOT_TWO_START;
-extern char BOOT CODESEG;
-extern char BOOT DATASEG;
+extern char KERNEL_END;
+extern char BOOT_TWO_START;
+extern char CODESEG;
+extern char DATASEG;
+extern idt_ptr_t g_idt_ptr;
+extern idt_entry_t idt[255];
 
 void BOOT c_bmain ( void )
 {
@@ -16,7 +19,7 @@ void BOOT c_bmain ( void )
     tty_clear();
     tty_print("Entered boot stage 2.5\n");
 
-    tty_print("Initializing IDT");
+    tty_print("Initializing IDT\n");
     idt_initialize();
 
     tty_print("Starting serial driver...\n");
@@ -35,8 +38,15 @@ void BOOT c_bmain ( void )
     driver_ata_init();
     driver_ata_debug_print();
     
+    tty_print("IDTPTR located at : %x\n", (int)&g_idt_ptr);
+    tty_print("IDT located at : %x\n", (int)idt);
     tty_print("GDT DATASEG located at : %x\n", (int)&DATASEG);
     tty_print("GDT CODESEG located at : %x\n", (int)&CODESEG);
     tty_print("BOOT_TWO_START located at : %x\n", (int)&BOOT_TWO_START);
     tty_print("KERNEL_END located at : %x\n", (int)&KERNEL_END);
+
+    __asm__("sti; int $1");
+    __asm__("l: jmp l");
+
+    tty_print("Hm\n");
 }
